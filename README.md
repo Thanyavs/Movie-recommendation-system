@@ -1,2 +1,16 @@
 # Movie-recommendation-system
-FlixSwipe is a social movie recommendation platform where users swipe through films, get personalized suggestions, and connect with “movie twins” who share similar tastes. Powered by Firebase, it features secure authentication, real-time chat, and a gamified FlixCoins system for a fun and interactive movie discovery experience.
+🎬 FlixSwipe — A social movie recommendation and matching platform that makes discovering films fun and interactive.
+
+✨ What it offers:
+
+🎥 Swipe through movies to build your personal taste profile
+
+🤝 Connect with “movie twins” who share similar preferences
+
+🔐 Secure Google authentication powered by Firebase
+
+💬 Real-time chat to discuss movies with your matches
+
+🪙 Gamified FlixCoins system for unlocking special features
+
+FlixSwipe blends personalized recommendations, social interaction, and real-time experiences to create a smarter and more engaging way to explore movies.
