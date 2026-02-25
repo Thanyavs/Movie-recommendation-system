@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Your Match — FlixSwipe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Reuse your main stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- SAME HEADER AS MAIN PAGE -->
+  <header class="topbar">
+    <div class="brand">
+      <svg width="36" height="36" viewBox="0 0 24 24" class="logo" aria-hidden="true">
+        <rect rx="4" width="24" height="24" fill="#e50914"></rect>
+        <path d="M6 7h12v2H6zM6 11h12v2H6zM6 15h8v2H6z" fill="#fff"></path>
+      </svg>
+      <span class="brand-name">FlixSwipe</span>
+    </div>
+
+    <nav class="nav-actions">
+      <button id="homeBtn" class="btn match-btn invert-hover">Home</button>
+
+      <!-- FlixCoins HUD -->
+      <div id="flixcoinHUD" class="header-coins">
+        <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" class="coin-icon" />
+        <span id="coinCount">0</span>
+      </div>
+    </nav>
+  </header>
+
+
+  <main class="match-container">
+  
+  <!-- Centered Page Heading -->
+  <h2 class="main-title">Find Match</h2>
+
+  <!-- Match Start Panel -->
+  <div id="matchStart" class="match-panel">
+    <p>Spend 100 FlixCoins to match with a user who shares your movie taste.</p>
+    <button id="startMatchBtn" class="btn match-btn invert-hover">Find My Match</button>
+  </div>
+
+  <!-- Loading Animation -->
+  <div id="matchLoading" class="match-loading hidden">
+    <div class="loader"></div>
+    <p>Finding your perfect match...</p>
+  </div>
+
+  <!-- Match Found -->
+  <div id="matchFound" class="match-found hidden">
+    <h2>🎉 Found a user!</h2>
+    <p class="match-score">87.3% taste match</p>
+    <div class="match-profile">
+        <img src="girl.png" class="match-avatar" />
+        <div class="match-info">
+            <h3 class="match-name">Alex • 23</h3>
+            <p class="match-tags">Top genres: Sci-Fi, Thriller, Mystery</p>
+        </div>
+    </div>
+
+    <div class="chatbox" id="chatbox">
+        <div id="typingIndicator" class="typing-indicator hidden">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message...">
+      <button id="sendMessageBtn" class="btn invert-hover">Send</button>
+    </div>
+  </div>
+</main>
+
+
+  <script>
+    // --- Detect Group Room from URL ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomCode = urlParams.get("room");
+
+    if (roomCode) {
+      document.title = `FlixSwipe | Group Room ${roomCode}`;
+
+      // Find or create header element
+      let header = document.querySelector(".match-header");
+      if (!header) {
+        header = document.createElement("h2");
+        header.className = "match-header";
+        document.querySelector(".match-container").prepend(header);
+      }
+
+      // Update the header text
+      header.innerText = `🎬 Group Match Room: ${roomCode}`;
+    }
+  </script>
+
+  <script src="findmatch.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FlixSwipe — Movie Discovery</title>
+  <!-- Page fade-in & font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', 'Netflix Sans', 'Helvetica Neue', Arial, sans-serif;
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
+    }
+    body.fade-in { opacity: 1; }
+  </style>
+
+
+  <!-- Poppins font (Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-nxW... (not needed offline)" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  
+
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash" class="splash-screen">
+    <div class="splash-logo-wrap">
+      <svg width="80" height="80" viewBox="0 0 24 24" class="splash-logo">
+        <rect rx="4" width="24" height="24" fill="#e50914"></rect>
+        <path d="M6 7h12v2H6zM6 11h12v2H6zM6 15h8v2H6z" fill="#fff"></path>
+      </svg>
+      <div class="splash-title">FlixSwipe</div>
+    </div>
+  </div>
+
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <!-- logo + FlixSwipe name -->
+        <svg width="36" height="36" viewBox="0 0 24 24" class="logo" aria-hidden="true">
+          <rect rx="4" width="24" height="24" fill="#e50914"></rect>
+          <path d="M6 7h12v2H6zM6 11h12v2H6zM6 15h8v2H6z" fill="#fff"></path>
+        </svg>
+        <span class="brand-name">FlixSwipe</span>
+      </div>
+
+      <nav class="nav-actions">
+        <button id="matchBtn" class="btn match-btn invert-hover">Find Your Match!</button>
+
+        <div id="flixcoinHUD" class="header-coins">
+          <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" class="coin-icon">
+          <span id="coinCount">0</span>
+        </div>
+        <!-- Profile Container (replaces Login button when signed in) -->
+        <div id="profileContainer" class="profile-container hidden">
+          <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Profile" class="profile-pic" />
+          <div class="profile-dropdown hidden" id="profileDropdown">
+            <p id="profileEmail" class="profile-email">user@email.com</p>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+          </div>
+        </div>
+
+        <!-- Default Login Button (shown only when logged out) -->
+        <button id="loginBtn" class="login-btn">Login</button>
+      </nav>
+      <div id="welcomeGreeting" class="welcome-greeting hidden"></div>
+      <button id="createGroupBtn" class="group-btn">Create Group Match</button>
+
+  </header>
+
+
+    <main class="main">
+      <aside class="sidebar">
+        <div class="panel stats">
+          <h4>Daily Swipe Challenge</h4>
+          <div class="challenge">
+            <div class="progress-track">
+              <div id="challengeProgress" class="progress-fill" style="width:0%"></div>
+            </div>
+            <div class="challenge-meta">0 / 10 swipes</div>
+          </div>
+        </div>
+
+        <div class="panel preferences">
+          <h4>Your Quick Stats</h4>
+          <div class="stat-row">
+            <div>Likes</div><div id="likesCount">0</div>
+          </div>
+          <div class="stat-row">
+            <div>Dislikes</div><div id="dislikesCount">0</div>
+          </div>
+          <div class="stat-row">
+            <div>Top genre</div><div id="topGenre">—</div>
+          </div>
+        </div>
+
+        <div class="panel quick-actions">
+          <button id="undoBtn" class="btn invert-hover">Undo</button>
+          <button id="wildcardBtn" class="btn invert-hover">Wildcard</button>
+        </div>
+
+      </aside>
+      <div id="backgroundBlur"></div>
+      <section class="center">
+        <div class="deck-wrap">
+          <div id="cardDeck" class="card-deck">
+            <!-- cards inserted by JS -->
+          </div>
+
+          <div class="deck-controls">
+            <button id="dislikeBtn" class="icon-btn dislike invert-hover"><i class="fa fa-times"></i></button>
+            <button id="likeBtn" class="icon-btn like invert-hover"><i class="fa fa-heart"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="rightbar">
+        <div class="panel match">
+          <h4>Group Match Demo</h4>
+          <p>Simulate 3 friends swiping now and get overlap movie:</p>
+          <button id="groupBtn" class="btn invert-hover">Run Group Match</button>
+          <div id="groupResult" class="group-result">—</div>
+        </div>
+
+        <div class="panel feed">
+          <h4>Activity Feed</h4>
+          <ul id="feedList" class="feed-list"></ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <small>Prototype • FlixSwipe — swipe to discover • Minimal demo</small>
+    </footer>
+  </div>
+  <!-- Daily Reward Popup -->
+  <div id="dailyRewardPopup" class="daily-reward-popup hidden">
+    <div class="reward-content">
+      <h2>🎉 Daily Goal Achieved! 🎉</h2>
+      <p>You reached your swipe goal for today.</p>
+      <p class="reward-coins">+100 FlixCoins</p>
+      <button id="rewardCloseBtn" class="btn invert-hover">Awesome!</button>
+    </div>
+  </div>
+
+
+  <script src="tmdb.js"></script>
+  <script type="module" src="script.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("fade-in");
+    });
+  </script>
+  <!-- Group Match Share Popup -->
+<div id="linkPopup" class="popup hidden">
+  <div class="popup-content">
+    <h3>🎬 Share this link with friends</h3>
+    <input type="text" id="groupLinkInput" readonly />
+    <button id="copyLinkBtn" class="btn match-btn invert-hover">Copy Link</button>
+    <button id="closePopupBtn" class="btn close-btn">Close</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | FlixSwipe</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #0f0f0f 0%, #000 100%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .glow-circle {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229,9,20,0.25) 0%, transparent 70%);
+      top: -100px;
+      left: -100px;
+      filter: blur(70px);
+      z-index: -1;
+      animation: pulse 6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: none;
+      border: none;
+      color: #e50914;
+      font-size: 26px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.15);
+      color: #fff;
+      text-shadow: 0 0 12px rgba(229, 9, 20, 0.6);
+    }
+
+    .login-container {
+      width: 380px;
+      background: rgba(20, 20, 20, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 45px 50px;
+      box-shadow: 0 0 40px rgba(229, 9, 20, 0.2);
+      text-align: center;
+      position: relative;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #e50914;
+      text-shadow: 0 0 12px rgba(229,9,20,0.4);
+      margin-bottom: 25px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .login-input:focus {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 6px rgba(229, 9, 20, 0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 0;
+      margin-top: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #e50914;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      background: #f6121d;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+    }
+
+    .google-btn {
+      background: #ffffff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-top: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .google-btn:hover {
+      background: #f1f1f1;
+      transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .google-btn svg {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    .footer-text a {
+      color: #e50914;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .footer-text a:hover {
+      color: #fff;
+    }
+
+    .spinner {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-circle"></div>
+  <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+
+  <div class="login-container">
+    <div class="logo">FlixSwipe</div>
+
+    <input type="email" id="email" placeholder="Email" class="login-input" />
+    <input type="password" id="password" placeholder="Password" class="login-input" />
+
+    <button id="loginEmailBtn" class="btn">
+      Login
+      <div class="spinner" id="emailSpinner"></div>
+    </button>
+
+    <button id="googleLoginBtn" class="btn google-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.3 0 6 1.1 8.2 3.2l6.1-6.1C34.9 3.4 29.9 1.5 24 1.5 14.7 1.5 6.7 6.9 3 14.4l7.5 5.8C12 13.4 17.5 9.5 24 9.5z"/>
+        <path fill="#34A853" d="M46.5 24.5c0-1.6-.1-3.2-.4-4.7H24v9.1h12.6c-.5 2.7-2 5-4.2 6.5l6.5 5c3.8-3.5 6.1-8.7 6.1-15.9z"/>
+        <path fill="#4A90E2" d="M24 46.5c6 0 11-2 14.7-5.6l-6.5-5c-1.8 1.2-4.2 1.9-8.2 1.9-6.5 0-12-3.9-14.5-9.5l-7.5 5.8c3.7 7.5 11.7 13 21.1 13z"/>
+        <path fill="#FBBC05" d="M9.5 28.3c-.6-1.8-.9-3.7-.9-5.8s.3-3.9.9-5.8l-7.5-5.8C.8 14.4 0 19.1 0 23.5s.8 9.1 2 12.6l7.5-5.8z"/>
+      </svg>
+      Login with Google
+      <div class="spinner" id="googleSpinner"></div>
+    </button>
+
+    <div class="footer-text">
+      Don’t have an account? <a href="#" id="registerLink">Register</a>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      createUserWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCxTmf4I6F_IjKeVOZlNdE4A21p9QEAJXk",
+        authDomain: "flixswipe-30468.firebaseapp.com",
+        projectId: "flixswipe-30468",
+        storageBucket: "flixswipe-30468.firebasestorage.app",
+        messagingSenderId: "127173962149",
+        appId: "1:127173962149:web:632ff474e1d6e598e3e04c",
+        measurementId: "G-4QXLG25WWJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const emailBtn = document.getElementById("loginEmailBtn");
+    const googleBtn = document.getElementById("googleLoginBtn");
+    const emailSpinner = document.getElementById("emailSpinner");
+    const googleSpinner = document.getElementById("googleSpinner");
+
+    async function withSpinner(button, spinner, task) {
+      button.disabled = true;
+      spinner.style.display = "inline-block";
+      try {
+        await task();
+      } finally {
+        button.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    // Email login
+    emailBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      if (!email || !password) return alert("Please enter both email and password.");
+
+      await withSpinner(emailBtn, emailSpinner, async () => {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful!");
+        window.location.href = "index.html";
+      }).catch(err => alert(err.message));
+    });
+
+    // Google login
+    googleBtn.addEventListener("click", async () => {
+      await withSpinner(googleBtn, googleSpinner, async () => {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        localStorage.setItem("flixUser", JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          uid: user.uid
+        }));
+        alert(`Welcome, ${user.displayName}!`);
+        window.location.href = "index.html";
+      }).catch(err => alert(err.message));
+    });
+
+    // Register new user
+    document.getElementById("registerLink").addEventListener("click", async () => {
+      const email = prompt("Enter email to register:");
+      const password = prompt("Enter password:");
+      if (email && password) {
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+          alert("Account created successfully!");
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+    });
+
+    // Auto redirect if already logged in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.setItem("flixUser", JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          uid: user.uid
+        }));
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
